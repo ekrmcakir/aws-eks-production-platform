@@ -1,0 +1,29 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+!*.tfvars.example
+.terraform/
+.terraform.lock.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Kubernetes & Helm
+*.kubeconfig
+kubeconfig*
+*.tgz
+Chart.lock
+
+# OS & IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+*.log
