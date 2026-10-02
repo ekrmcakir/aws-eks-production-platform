@@ -1,0 +1,35 @@
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: default-workloads
+  labels:
+    platform.kubernetes.io/tier: platform
+spec:
+  template:
+    metadata:
+      labels:
+        role: general-workload
+        environment: production
+    spec:
+      nodeClassRef:
+        name: default-ec2nodeclass
+      requirements:
+        - key: "karpenter.k8s.aws/instance-category"
+          operator: In
+          values: ["c", "m", "r"]
+        - key: "karpenter.k8s.aws/instance-generation"
+          operator: Gt
+          values: ["4"]
+        - key: "karpenter.sh/capacity-type"
+          operator: In
+          values: ["spot", "on-demand"]
+        - key: "kubernetes.io/arch"
+          operator: In
+          values: ["amd64", "arm64"]
+      expireAfter: 720h # 30 days node rotation
+  limits:
+    cpu: "100"
+    memory: 400Gi
+  disruption:
+    consolidationPolicy: WhenUnderutilized
+    consolidateAfter: 30s
