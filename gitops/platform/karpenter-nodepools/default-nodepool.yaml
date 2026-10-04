@@ -32,4 +32,4 @@ spec:
     memory: 400Gi
   disruption:
     consolidationPolicy: WhenUnderutilized
-    consolidateAfter: 30s
+
