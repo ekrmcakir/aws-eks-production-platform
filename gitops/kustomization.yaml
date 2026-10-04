@@ -7,7 +7,4 @@ resources:
   - platform/network-policies/default-deny.yaml
   - platform/network-policies/allow-dns.yaml
   - platform/ingress-cert/cluster-issuer.yaml
-  - apps/microservices/deployment.yaml
-  - apps/microservices/service.yaml
-  - apps/microservices/ingress.yaml
-  - apps/microservices/network-policy.yaml
+  - apps/microservices/
