@@ -26,10 +26,10 @@ spec:
         - key: "kubernetes.io/arch"
           operator: In
           values: ["amd64", "arm64"]
-      expireAfter: 720h # 30 days node rotation
   limits:
     cpu: "100"
     memory: 400Gi
   disruption:
     consolidationPolicy: WhenUnderutilized
+    expireAfter: 720h
 
