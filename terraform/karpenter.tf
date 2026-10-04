@@ -97,6 +97,11 @@ resource "aws_iam_policy" "karpenter_controller_policy" {
         Resource = "*"
       },
       {
+        Action   = ["eks:DescribeCluster"]
+        Effect   = "Allow"
+        Resource = aws_eks_cluster.eks.arn
+      },
+      {
         Action   = ["iam:PassRole"]
         Effect   = "Allow"
         Resource = aws_iam_role.karpenter_node.arn
@@ -113,6 +118,7 @@ resource "aws_iam_policy" "karpenter_controller_policy" {
       }
     ]
   })
+
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_controller_attach" {
@@ -171,9 +177,15 @@ resource "helm_release" "karpenter" {
   }
 
   set {
+    name  = "settings.clusterEndpoint"
+    value = aws_eks_cluster.eks.endpoint
+  }
+
+  set {
     name  = "settings.interruptionQueue"
     value = aws_sqs_queue.karpenter_interruption.name
   }
+
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
