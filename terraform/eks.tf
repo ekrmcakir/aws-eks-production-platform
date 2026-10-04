@@ -161,6 +161,7 @@ resource "aws_eks_node_group" "system_nodes" {
 
   instance_types = ["m6i.large", "m5.large"]
   capacity_type  = "ON_DEMAND"
+  ami_type       = "AL2023_x86_64_STANDARD"
 
   labels = {
     "role" = "system"
