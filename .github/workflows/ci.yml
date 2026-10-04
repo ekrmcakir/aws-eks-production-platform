@@ -1,0 +1,46 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  terraform-check:
+    name: Terraform Format & Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
+
+      - name: Check Terraform Format
+        run: |
+          terraform -chdir=terraform fmt -check
+
+  manifests-lint:
+    name: Kubernetes Manifests Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate YAML Syntax
+        run: |
+          python3 -c "
+          import os, yaml
+          for root, _, files in os.walk('gitops'):
+              for f in files:
+                  if f.endswith(('.yaml', '.yml')):
+                      p = os.path.join(root, f)
+                      with open(p) as fh:
+                          yaml.safe_load_all(fh)
+                          print(f'Valid YAML: {p}')
+          "
