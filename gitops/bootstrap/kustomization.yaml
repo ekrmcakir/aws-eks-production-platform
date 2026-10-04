@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../platform/karpenter-nodepools/default-nodepool.yaml
+  - ../platform/karpenter-nodepools/ec2nodeclass.yaml
+  - ../platform/network-policies/default-deny.yaml
+  - ../platform/network-policies/allow-dns.yaml
+  - ../platform/ingress-cert/cluster-issuer.yaml
+  - ../apps/microservices/
