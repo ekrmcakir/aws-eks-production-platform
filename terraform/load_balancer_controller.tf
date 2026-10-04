@@ -74,6 +74,21 @@ resource "helm_release" "aws_load_balancer_controller" {
     value = aws_iam_role.load_balancer_controller_role.arn
   }
 
+  set {
+    name  = "enableShield"
+    value = "false"
+  }
+
+  set {
+    name  = "enableWaf"
+    value = "false"
+  }
+
+  set {
+    name  = "enableWafv2"
+    value = "false"
+  }
+
   depends_on = [
     aws_eks_node_group.system_nodes,
     aws_iam_role_policy_attachment.load_balancer_controller_attach
